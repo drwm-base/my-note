@@ -2,13 +2,20 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+        <style>
+            h1, h3 {text-align: center}
+        </style>
         <title>My Web Page</title>
     </head>
 
     <body>
         <!-- This is a comment -->
         <h1>Note-Taking App</h1>
+        <h3>by: drwm-base</h3>
+
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+        
         <script>
         const fs = new Filer.FileSystem(); 
         var str = "";
@@ -32,6 +39,11 @@
             });
         }, 200);
         </script>
-        <div id="note" contenteditable></div>
+        <!--The actual container for the note taking-->
+        <div class="paper container" id="note" contenteditable></div>
+   
+   
+   
+   
     </body>
 </html>
