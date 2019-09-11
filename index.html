@@ -3,10 +3,12 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+        
         <style>
             h1, h3 {text-align: center}
             #parent {text-align: center}
-            #buttons {text-align: center; padding-top: 10pt}
+            #buttons {align-content: center; padding-top: 10pt}
+            #word {text-align: right}
             #alert {margin: 0 auto; margin-top: 5pt; padding: 5pt; color: white; text-align: center;
             background: red; width: 20%; visibility: hidden}
         </style>
@@ -26,6 +28,7 @@
         
         window.addEventListener('DOMContentLoaded', (event) => {
             fs.readFile('/note', 'utf8', function(err, data) {
+                
                 if (err !== null) {
                     str = "Welcome to my note-taking app!"
                 }
@@ -33,12 +36,28 @@
                     str = data;
                 }
                 document.querySelector('#note').innerHTML = str;
+                wordCount();
             })
         });
 
         window.setInterval(()=>{
             save();
         }, 2000);
+
+        window.setInterval(()=>{
+            wordCount();
+        }, 500);
+
+        function wordCount() {
+            if (!document.querySelector('#note').innerHTML) {
+                document.querySelector('#word').innerHTML = "Word Count: 0";
+            }
+            else {
+                document.querySelector('#word').innerHTML = "Word Count: " +
+                document.querySelector('#note').innerHTML.split(' ').length;
+            }
+            
+        }
 
         function alertSystem(msg) {
             if (msg) {
@@ -50,7 +69,6 @@
             }
         }
 
-        
         function save() {
             fs.writeFile('/note',
             document.querySelector('#note').innerHTML, function(err) {
@@ -62,14 +80,21 @@
             alertSystem("Saved!");
         }
         </script>
+
+
+
+
         <!--The actual container for the note taking-->
         <div id="parent">
             <div class="paper container" id="note" contenteditable></div>
+            <div id="word" class="container">0</div>
             <div id="buttons">
-                <button id="save" onclick="saveAlert()">Save</button>
-            <div id="alert"></div>
-        </div>
-
+                
+                <div id="centered">
+                    <button id="save" onclick="saveAlert()">Save</button>
+                    <div id="alert"></div>
+                </div>
+            </div>
         </div>
         
    
