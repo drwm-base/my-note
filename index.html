@@ -5,13 +5,17 @@
         <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
         <style>
             h1, h3 {text-align: center}
+            #parent {text-align: center}
+            #buttons {text-align: center; padding-top: 10pt}
+            #alert {margin: 0 auto; margin-top: 5pt; padding: 5pt; color: white; text-align: center;
+            background: red; width: 20%; visibility: hidden}
         </style>
-        <title>My Web Page</title>
+        <title>Note Taking App</title>
     </head>
 
     <body>
         <!-- This is a comment -->
-        <h1>Note-Taking App</h1>
+        <h1>Note Taking App</h1>
         <h3>by: drwm-base</h3>
 
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
@@ -33,15 +37,41 @@
         });
 
         window.setInterval(()=>{
+            save();
+        }, 2000);
+
+        function alertSystem(msg) {
+            if (msg) {
+                document.querySelector('#alert').innerHTML = msg;
+                document.querySelector('#alert').style.visibility= "visible";
+                setTimeout(()=> {
+                    document.querySelector('#alert').style.visibility = "hidden";
+                }, 1000);
+            }
+        }
+
+        
+        function save() {
             fs.writeFile('/note',
             document.querySelector('#note').innerHTML, function(err) {
                 if (err) {throw err;}
             });
-        }, 200);
+        }
+        function saveAlert() {
+            save();
+            alertSystem("Saved!");
+        }
         </script>
         <!--The actual container for the note taking-->
-        <div class="paper container" id="note" contenteditable></div>
-   
+        <div id="parent">
+            <div class="paper container" id="note" contenteditable></div>
+            <div id="buttons">
+                <button id="save" onclick="saveAlert()">Save</button>
+            <div id="alert"></div>
+        </div>
+
+        </div>
+        
    
    
    
