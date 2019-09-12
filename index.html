@@ -3,17 +3,28 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
-        <link rel="stylesheet" href="style.css">
+        
+        <style>
+            h1, h3 {text-align: center}
+            #parent {text-align: center}
+            #buttons {align-content: center; padding-top: 10pt}
+            #download {font-size: 25pt;}
+            #word {text-align: right}
+            #alert {margin: 0 auto; margin-top: 5pt; padding: 5pt; color: white; text-align: center;
+            background: red; width: 20%; visibility: hidden}
+        </style>
         <title>Note Taking App</title>
     </head>
 
-    <body></body>
+    <body>
+        <!-- This is a comment -->
         <h1>Note Taking App</h1>
         <h3>by: drwm-base</h3>
-        <!--To call filer.js to help with file management-->
+
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
-        <!--Script contains event listeners and javascript functions to run the site-->
+        <script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
         <script>
+        
         const fs = new Filer.FileSystem(); 
         var str = "";
         
@@ -30,15 +41,12 @@
                 wordCount();
             })
         });
-
         window.setInterval(()=>{
             save();
         }, 2000);
-
         window.setInterval(()=>{
             wordCount();
         }, 500);
-
         function wordCount() {
             if (!document.querySelector('#note').innerHTML) {
                 document.querySelector('#word').innerHTML = "Word Count: 0";
@@ -49,7 +57,18 @@
             }
             
         }
-
+        
+        function download(name) {
+            var b = new Blob([document.querySelector('#note').innerHTML], 
+                {type: "text/plain;charset=utf-8"});
+            if (name) {
+                saveAs(b, name + ".txt");
+            }
+            else {
+                saveAs(b, "note.txt");
+            }
+            
+        }
         function alertSystem(msg) {
             if (msg) {
                 document.querySelector('#alert').innerHTML = msg;
@@ -59,7 +78,6 @@
                 }, 1000);
             }
         }
-
         function save() {
             fs.writeFile('/note',
             document.querySelector('#note').innerHTML, function(err) {
@@ -75,17 +93,24 @@
 
 
 
-        <!--The html code for the interface to write and save notes-->
+        <!--The actual container for the note taking-->
         <div id="parent">
             <div class="paper container" id="note" contenteditable></div>
             <div id="word" class="container">0</div>
-            <div id="buttons">
-                
-                <div id="centered">
-                    <button id="save" onclick="saveAlert()">Save</button>
-                    <div id="alert"></div>
+            <div id="buttons" class="row">
+                <div class="col-3 col"></div>
+                <div id="centered" class="col-9 col">
+                    
+                    <div id="downloadLayout" class="row container">
+                        <button id="save" class="col-3 col" onclick="saveAlert()">Save</button>
+                        <button class="col-3 col"onclick="download(document.querySelector('.downloadName').innerHTML)">Download</button>
+                        <div id="download" class="col-3 col">Download Name: (default: note)</div>
+                        <div class="downloadName col-3 col paper" contenteditable></div>
+                    </div>
+                    
                 </div>
             </div>
+            <div id="alert"></div>
         </div>
         
    
