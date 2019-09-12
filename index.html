@@ -3,25 +3,16 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
-        
-        <style>
-            h1, h3 {text-align: center}
-            #parent {text-align: center}
-            #buttons {align-content: center; padding-top: 10pt}
-            #word {text-align: right}
-            #alert {margin: 0 auto; margin-top: 5pt; padding: 5pt; color: white; text-align: center;
-            background: red; width: 20%; visibility: hidden}
-        </style>
+        <link rel="stylesheet" href="style.css">
         <title>Note Taking App</title>
     </head>
 
-    <body>
-        <!-- This is a comment -->
+    <body></body>
         <h1>Note Taking App</h1>
         <h3>by: drwm-base</h3>
-
+        <!--To call filer.js to help with file management-->
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
-        
+        <!--Script contains event listeners and javascript functions to run the site-->
         <script>
         const fs = new Filer.FileSystem(); 
         var str = "";
@@ -84,7 +75,7 @@
 
 
 
-        <!--The actual container for the note taking-->
+        <!--The html code for the interface to write and save notes-->
         <div id="parent">
             <div class="paper container" id="note" contenteditable></div>
             <div id="word" class="container">0</div>
