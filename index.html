@@ -23,6 +23,8 @@
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
         
         <script>
+        import { saveAs } from 'file-saver';
+        var FileSaver = require('file-saver');
         const fs = new Filer.FileSystem(); 
         var str = "";
         
@@ -57,6 +59,12 @@
                 document.querySelector('#note').innerHTML.split(' ').length;
             }
             
+        }
+        
+        function download(name) {
+            var b = new Blob([document.querySelector('#note').innerHTML], 
+                {type: "text/plain;charset=utf-8"});
+            FileSaver.saveAs(b, name + ".txt");
         }
 
         function alertSystem(msg) {
