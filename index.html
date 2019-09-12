@@ -21,10 +21,9 @@
         <h3>by: drwm-base</h3>
 
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
-        
+        <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
         <script>
-        import { saveAs } from 'file-saver';
-        var FileSaver = require('file-saver');
+        
         const fs = new Filer.FileSystem(); 
         var str = "";
         
@@ -64,7 +63,13 @@
         function download(name) {
             var b = new Blob([document.querySelector('#note').innerHTML], 
                 {type: "text/plain;charset=utf-8"});
-            FileSaver.saveAs(b, name + ".txt");
+            if (name) {
+                saveAs(b, name + ".txt");
+            }
+            else {
+                saveAs(b, "note.txt");
+            }
+            
         }
 
         function alertSystem(msg) {
@@ -83,6 +88,7 @@
                 if (err) {throw err;}
             });
         }
+
         function saveAlert() {
             save();
             alertSystem("Saved!");
@@ -100,6 +106,10 @@
                 
                 <div id="centered">
                     <button id="save" onclick="saveAlert()">Save</button>
+                    <div id="downloadLayout">
+                        <button id="download" onclick="download()">Download</button>
+                        <div id="download" contenteditable></div>
+                    </div>
                     <div id="alert"></div>
                 </div>
             </div>
