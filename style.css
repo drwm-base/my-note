@@ -1,6 +1,7 @@
 h1, h3 {text-align: center}
 #parent {text-align: center}
 #buttons {align-content: center; padding-top: 10pt}
+#download {font-size: 25pt;}
 #word {text-align: right}
 #alert {margin: 0 auto; margin-top: 5pt; padding: 5pt; color: white; text-align: center;
     background: red; width: 20%; visibility: hidden}
