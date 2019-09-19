@@ -42,16 +42,21 @@
             }, 2000);
             window.setInterval(() => {
                 wordCount();
-            }, 500);
+            }, 200);
             function wordCount() {
-                if (!document.querySelector('#note').innerHTML) {
-                    document.querySelector('#word').innerHTML = "Word Count: 0";
-                }
-                else {
-                    document.querySelector('#word').innerHTML = "Word Count: " +
-                        document.querySelector('#note').innerHTML.split(' ').length;
-                }
 
+                var count = document.querySelector("#note").innerHTML.trim();
+                count = count.replace(/&nbsp;+/g, "");
+                count = count.replace(/<[^>]*>/g, " ");
+                count = count.replace(/\s+/g, " ");
+                count = count.split(" ");
+                var p = 0;
+                for( var i = 0; i < count.length; i++){
+                    if(count[i] == "")
+                        ++p;
+                }
+                count = count.length - p; 
+                document.querySelector("#word").innerHTML = "Word Count: " + count;
             }
 
             function download(name) {
