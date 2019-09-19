@@ -9,81 +9,93 @@
 
     <body>
         <!-- This is a comment -->
+        <div class="switch">Dark mode:
+            <button class="inner-switch">OFF</span>
+        </div>
+
         <h1>Note Taking App</h1>
         <h3>by: drwm-base</h3>
-
+        
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
         <script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         <script>
-        
-        const fs = new Filer.FileSystem(); 
-        var str = "";
-        
-        window.addEventListener('DOMContentLoaded', (event) => {
-            fs.readFile('/note', 'utf8', function(err, data) {
-                
-                if (err !== null) {
-                    str = "Welcome to my note-taking app!"
-                }
-                else if (data !== null) {
-                    str = data;
-                }
-                document.querySelector('#note').innerHTML = str;
-                wordCount();
-            })
-        });
-        window.setInterval(()=>{
-            save();
-        }, 2000);
-        window.setInterval(()=>{
-            wordCount();
-        }, 500);
-        function wordCount() {
-            if (!document.querySelector('#note').innerHTML) {
-                document.querySelector('#word').innerHTML = "Word Count: 0";
-            }
-            else {
-                document.querySelector('#word').innerHTML = "Word Count: " +
-                document.querySelector('#note').innerHTML.split(' ').length;
-            }
-            
-        }
-        
-        function download(name) {
-            var b = new Blob([document.querySelector('#note').innerHTML], 
-                {type: "text/plain;charset=utf-8"});
-            if (name) {
-                saveAs(b, name + ".txt");
-            }
-            else {
-                saveAs(b, "note.txt");
-            }
-            
-        }
-        function alertSystem(msg) {
-            if (msg) {
-                document.querySelector('#alert').innerHTML = msg;
-                document.querySelector('#alert').style.visibility= "visible";
-                setTimeout(()=> {
-                    document.querySelector('#alert').style.visibility = "hidden";
-                }, 1000);
-            }
-        }
-        function save() {
-            fs.writeFile('/note',
-            document.querySelector('#note').innerHTML, function(err) {
-                if (err) {throw err;}
+
+            const fs = new Filer.FileSystem();
+            var str = "";
+
+            window.addEventListener('DOMContentLoaded', (event) => {
+                fs.readFile('/note', 'utf8', function (err, data) {
+
+                    if (err !== null) {
+                        str = "Welcome to my note-taking app!"
+                    }
+                    else if (data !== null) {
+                        str = data;
+                    }
+                    document.querySelector('#note').innerHTML = str;
+                    wordCount();
+                })
             });
-        }
-        function saveAlert() {
-            save();
-            alertSystem("Saved!");
-        }
+            window.setInterval(() => {
+                save();
+            }, 2000);
+            window.setInterval(() => {
+                wordCount();
+            }, 500);
+            function wordCount() {
+                if (!document.querySelector('#note').innerHTML) {
+                    document.querySelector('#word').innerHTML = "Word Count: 0";
+                }
+                else {
+                    document.querySelector('#word').innerHTML = "Word Count: " +
+                        document.querySelector('#note').innerHTML.split(' ').length;
+                }
+
+            }
+
+            function download(name) {
+                var b = new Blob([document.querySelector('#note').innerHTML],
+                    { type: "text/plain;charset=utf-8" });
+                if (name) {
+                    saveAs(b, name + ".txt");
+                }
+                else {
+                    saveAs(b, "note.txt");
+                }
+
+            }
+            function alertSystem(msg) {
+                if (msg) {
+                    document.querySelector('#alert').innerHTML = msg;
+                    document.querySelector('#alert').style.visibility = "visible";
+                    setTimeout(() => {
+                        document.querySelector('#alert').style.visibility = "hidden";
+                    }, 1000);
+                }
+            }
+            function save() {
+                fs.writeFile('/note',
+                    document.querySelector('#note').innerHTML, function (err) {
+                        if (err) { throw err; }
+                    });
+            }
+            function saveAlert() {
+                    save();
+                    alertSystem("Saved!");
+                }
+
+                $(".inner-switch").on("click", function () {
+                    if ($("body").hasClass("dark")) {
+                        $("body").removeClass("dark");
+                        $(".inner-switch").text("OFF");
+                    } else {
+                        $("body").addClass("dark");
+                        $(".inner-switch").text("ON");
+                    }
+            });
         </script>
-
-
-
-
+        
         <!--The actual container for the note taking-->
         <div id="parent">
             <div class="paper container" id="note" contenteditable></div>
@@ -91,10 +103,10 @@
             <div id="buttons" class="row">
                 <div class="col-2 col"></div>
                 <div id="centered" class="col-10 col">
-                    
+        
                     <div id="downloadLayout" class="row container">
                         <button id="save" class="col-3 col" onclick="saveAlert()">Save</button>
-                        <button class="col-3 col"onclick="download(document.querySelector('.downloadName').innerHTML)">Download</button>
+                        <button class="col-3 col" onclick="download(document.querySelector('.downloadName').innerHTML)">Download</button>
                         <div id="download" class="col-3 col">Download Name: (default: note)</div>
                         <div class="downloadName col-3 col paper" contenteditable></div>
                     </div>
