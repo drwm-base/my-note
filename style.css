@@ -5,3 +5,33 @@ h1, h3 {text-align: center}
 #word {text-align: right}
 #alert {margin: 0 auto; margin-top: 5pt; padding: 5pt; color: white; text-align: center;
     background: red; width: 20%; visibility: hidden}
+
+.switch {
+    align-self: flex-end;
+  
+}
+.inner-switch {
+    display: inline-block;
+    cursor: pointer;
+  
+}
+
+.dark,
+.dark body {
+    background-color: #222;
+    color: #e6e6e6;
+    border-color: #e6e6e6;
+}
+
+.dark button {
+    color: #e6e6e6;
+    border-color: #e6e6e6;
+}
+
+.dark #note {
+    background-color: rgb(42, 42, 42);
+}
+
+.dark .downloadName{
+    background-color: rgb(42, 42, 42);
+}
